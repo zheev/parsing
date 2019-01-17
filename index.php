@@ -6,11 +6,29 @@
  * Time: 23:09
  */
 
-require './db.php';
-require './lib.php';
-require './telegram.php';
+
+if(!file_exists($_SERVER['PWD'].'/db.php') ||
+    !file_exists($_SERVER['PWD'].'/lib.php') ||
+    !file_exists($_SERVER['PWD'].'/telegram.php'))
+{
+    exit('Один из служебных файлов не подключен');
+}
+
+require $_SERVER['PWD'].'/db.php';
+require $_SERVER['PWD'].'/lib.php';
+require $_SERVER['PWD'].'/telegram.php';
+
+if(!file_exists($_SERVER['PWD'].'/constants.php'))
+{
+    exit('Файл с константами \'constants.php\' в корне сайта не создал');
+}
 
 $html = getHtml();
+
+if(strlen($html) <= 0)
+{
+    exit('Не удалось получить html-код с сайта');
+}
 
 // получение статей
 preg_match('/<ul class="mostabs mostabs-tile">(.*?)<\/ul>/ms', $html, $match);

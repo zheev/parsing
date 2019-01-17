@@ -108,7 +108,12 @@ function getPhoto($url)
 
     if($image){
 
-        $new_name = '/mnt/0a5cb80d-673d-4f97-a33b-188bfdef8a77/pars/tmp/'.time().'.jpg';
+        if(!file_exists($_SERVER['PWD'].'/tmp/'))
+        {
+            mkdir($_SERVER['PWD'].'/tmp/', 755);
+        }
+
+        $new_name = $_SERVER['PWD'].'/tmp/'.time().'.jpg';
 
         file_put_contents($new_name, $image);
     }

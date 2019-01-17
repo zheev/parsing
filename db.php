@@ -9,8 +9,8 @@
 
 function db_connect(&$db)
 {
-    if(!file_exists("rubin.db")){
-        $db = new SQLite3('rubin.db');
+    if(!file_exists(DB)){
+        $db = new SQLite3(DB);
         $createLinkTable="CREATE TABLE links(
             id INTEGER PRIMARY KEY,
             url TEXT  
@@ -25,7 +25,7 @@ function db_connect(&$db)
         $db->query($createListPlayers);
     }else{
         //если бд есть то просто подключ. к ней
-        $db = new SQLite3('rubin.db');
+        $db = new SQLite3(DB);
     }
 }
 
