@@ -7,6 +7,9 @@
  */
 
 //Функция для получения html с нужной страницы. Работаем с помощью cUrl
+/**
+ * @return string
+ */
 function getHtml()
 {
     $ch = curl_init('http://sport.business-gazeta.ru/razdel/484');
@@ -22,6 +25,10 @@ function getHtml()
 }
 
 //Функция для заполнения массива необходимыми урлами.
+/**
+ * @param $array
+ * @param $arTrueLink
+ */
 function fillArray($array, &$arTrueLink)
 {
     $count = count($array[0]);
@@ -34,14 +41,24 @@ function fillArray($array, &$arTrueLink)
             $arTrueLink[] = $array[0][$i];
         }
     }
-
 }
+
+// удаляем теги html
+/**
+ * @param $html
+ * @return string
+ */
 
 function deleteHtmlTags($html)
 {
     return ($html ? preg_replace('/<((\/)|.*?)>/m', '', $html): '');
 }
 
+//обрабатываем текст. Делаем текст красивее через markdown
+/**
+ * @param $html
+ * @return array
+ */
 function expressionArticle($html)
 {
 
@@ -77,6 +94,12 @@ function expressionArticle($html)
 
 }
 
+// получаем текст для отправки
+
+/**
+ * @param $url
+ * @return array
+ */
 function getTextNote($url)
 {
 
@@ -97,8 +120,16 @@ function getTextNote($url)
 
 }
 
+//обрабатываем фото в статье и отдельно зальём в телеграмм
+
+/**
+ * @param $url
+ * @return array
+ */
+
 function getPhoto($url)
 {
+    //проверяем есть ли в url полученный из атрибута src тега img
     if(!preg_match('/http/', $url))
     {
         $url = 'http:'.$url;
@@ -106,15 +137,16 @@ function getPhoto($url)
 
     $image = file_get_contents($url);
 
+    //првоеряем на пустоту
     if($image){
-
+        //если нет папки tmp, то создаём
         if(!file_exists($_SERVER['PWD'].'/tmp/'))
         {
             mkdir($_SERVER['PWD'].'/tmp/', 755);
         }
-
+        //запишем в переменную путь и название файла
         $new_name = $_SERVER['PWD'].'/tmp/'.time().'.jpg';
-
+        //запишем файл
         file_put_contents($new_name, $image);
     }
 

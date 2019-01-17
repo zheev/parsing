@@ -6,7 +6,9 @@
  * Time: 22:03
  */
 
-
+/**
+ * @param $db
+ */
 function db_connect(&$db)
 {
     if(!file_exists(DB)){
@@ -29,6 +31,9 @@ function db_connect(&$db)
     }
 }
 
+/**
+ * @param array $players
+ */
 function addPlayer($players = [])
 {
     db_connect($db);
@@ -44,6 +49,10 @@ function addPlayer($players = [])
 
     $db->close();
 }
+
+/**
+ * @param array $urls
+ */
 
 function addUrl($urls = [])
 {

@@ -7,11 +7,18 @@
  */
 require './constants.php';
 
+/**
+ * @param $type
+ * @return string
+ */
 function getUrlForSend($type)
 {
     return "https://api.telegram.org/bot".CHAT_BOT."/".$type;
 }
 
+/**
+ * @param $url
+ */
 function sendPhoto($url)
 {
     $urlTelegram = getUrlForSend("sendPhoto");
@@ -46,6 +53,10 @@ function sendPhoto($url)
 
 }
 
+/**
+ * @param $text
+ * @param $url
+ */
 function curlForSendMessage($text, $url)
 {
 
@@ -69,7 +80,9 @@ function curlForSendMessage($text, $url)
 
 }
 
-
+/**
+ * @param $url
+ */
 function sendMessage($url)
 {
 
