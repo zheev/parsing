@@ -6,6 +6,14 @@
  * Time: 21:53
  */
 
+
+if(!file_exists($_SERVER['PWD'].'/db.php') ||
+    !file_exists($_SERVER['PWD'].'/lib.php') ||
+    !file_exists($_SERVER['PWD'].'/telegram.php'))
+{
+    exit('Один из служебных файлов не подключен');
+}
+
 require $_SERVER['PWD'].'/lib.php';
 require $_SERVER['PWD'].'/constants.php';
 require $_SERVER['PWD'].'/db.php';
