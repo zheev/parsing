@@ -24,6 +24,20 @@ function getHtml()
     return $html;
 }
 
+function getHtmlPlayers()
+{
+    $ch = curl_init('http://www.rubin-kazan.ru/ru/team');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13");
+
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_HEADER, false);
+    $html = curl_exec($ch);
+    curl_close($ch);
+
+    return $html;
+}
+
 //Функция для заполнения массива необходимыми урлами.
 /**
  * @param $array
@@ -33,9 +47,11 @@ function fillArray($array, &$arTrueLink)
 {
     $count = count($array[0]);
 
+    $persons = implode('|', selectAllPlaeyrs());
+
     for($i = 0; $i <= $count-1; $i++)
     {
-        if(preg_match('/(Рубин|Кудряшов)/ms',$array[1][$i])
+        if(preg_match('/(Рубин|'.$persons.')/ms',$array[1][$i])
         && !preg_match('/((Все трансферы РПЛ))/ms', $array[1][$i]))
         {
             $arTrueLink[] = $array[0][$i];
@@ -74,11 +90,13 @@ function expressionArticle($html)
 
         $text = preg_replace('/(&hellip;)/', '...',$text);
 
+        $text = preg_replace('/(&mdash;)/', '-',$text);
+
         preg_match_all('/<img src="(.*?)".+?>/m', $text, $photo);
 
         $text = preg_replace('/<strong>(.*?)<\/strong>/m','*$1*',$text);
 
-        $text = preg_replace('/<p>(.*?)<\/p>/ms',"\t\t $1 \n\n",$text);
+        $text = preg_replace('/<p>(.*?)<\/p>/ms',"\t\t\t\t $1 \n\n",$text);
 
         $text = preg_replace('/\s{2,}/',' ',$text);
 
@@ -152,4 +170,14 @@ function getPhoto($url)
 
     return ['url' => $url, 'filePath' => (isset($new_name)?$new_name:'')];
 
+}
+
+/**
+ * @param $text
+ */
+function writeLog($text)
+{
+    $f = fopen($_SERVER['PWD'].'/logs/log.txt', 'a');
+    fwrite($f, $text . PHP_EOL);
+    fclose($f);
 }

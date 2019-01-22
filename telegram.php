@@ -60,6 +60,8 @@ function sendPhoto($url)
 function curlForSendMessage($text, $url)
 {
 
+    $text = mb_convert_encoding($text, 'utf-8', mb_detect_encoding($text));
+
     $data = array (
         "chat_id" => '@'.CHANNEL,
         "text" => $text,
@@ -107,12 +109,10 @@ function sendMessage($url)
     {
         foreach ($text as $item)
         {
-            $item = mb_convert_encoding($item, 'utf-8', mb_detect_encoding($item));
             curlForSendMessage($item, $urlTelegram);
         }
     }else{
 
-        $text = mb_convert_encoding($text, 'utf-8', mb_detect_encoding($text));
         curlForSendMessage($text, $urlTelegram);
 
     }

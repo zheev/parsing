@@ -20,7 +20,7 @@ require $_SERVER['PWD'].'/telegram.php';
 
 if(!file_exists($_SERVER['PWD'].'/constants.php'))
 {
-    exit('Файл с константами \'constants.php\' в корне сайта не создал');
+    exit('Файл с константами \'constants.php\' в корне сайта не создан');
 }
 
 $html = getHtml();
@@ -29,6 +29,7 @@ if(strlen($html) <= 0)
 {
     exit('Не удалось получить html-код с сайта');
 }
+writeLog(date('d').'.'.date('m'). '.'.date('Y').' '.date('G').' Скрипт запущен');
 
 // получение статей
 preg_match('/<ul class="mostabs mostabs-tile">(.*?)<\/ul>/ms', $html, $match);
@@ -69,10 +70,12 @@ foreach ($arTrueLink as $url)
         if(!in_array($url, $urlsFromDb))
         {
             sendMessage($url);
+            writeLog(date('d').'.'.date('m'). '.'.date('Y').' '.date('G').' Отправлена новость '.$url);
         }
     }else{
 
         sendMessage($url);
+        writeLog(date('d').'.'.date('m'). '.'.date('Y').' '.date('G').' Отправлена новость '.$url);
 
     }
 
@@ -81,8 +84,4 @@ foreach ($arTrueLink as $url)
 unset($urlsFromDb);
 
 addUrl($arTrueLink);
-
-
-
-
 

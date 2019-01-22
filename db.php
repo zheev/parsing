@@ -15,13 +15,13 @@ function db_connect(&$db)
         $db = new SQLite3(DB);
         $createLinkTable="CREATE TABLE links(
             id INTEGER PRIMARY KEY,
-            url TEXT  
+            url TEXT UNIQUE
         )";
         $db->query($createLinkTable);
 
         $createListPlayers = "CREATE TABLE players(
             id INTEGER PRIMARY KEY,
-            family TEXT
+            family TEXT UNIQUE
         )";
 
         $db->query($createListPlayers);
@@ -40,14 +40,32 @@ function addPlayer($players = [])
 
     foreach ($players as $player)
     {
-        $arPlay[] = '"'.$player.'"';
+        $arPlay[] = '("'.$player.'")';
     }
 
-    $sql = "insert ignore into players (url) values (".implode(',', $arPlay).")";
+    $sql = "insert or ignore into players (family) values ".implode(',', $arPlay);
 
     $db->query($sql);
 
     $db->close();
+}
+
+function selectAllPlaeyrs()
+{
+    db_connect($db);
+
+    $sql = 'select * from `players`';
+
+    $result = $db->query($sql);
+
+    $data = [];
+
+    while($d = $result->fetchArray(SQLITE3_ASSOC))
+    {
+        $data[] = $d['family'];
+    }
+
+    return ($data ? $data : []);
 }
 
 /**
