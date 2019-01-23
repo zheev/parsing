@@ -5,7 +5,6 @@
  * Date: 14.01.19
  * Time: 1:29
  */
-require './constants.php';
 
 /**
  * @param $type

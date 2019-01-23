@@ -7,9 +7,9 @@
  */
 
 
-if(!file_exists($_SERVER['PWD'].'/db.php') ||
+if( !file_exists($_SERVER['PWD'].'/db.php') ||
     !file_exists($_SERVER['PWD'].'/lib.php') ||
-    !file_exists($_SERVER['PWD'].'/telegram.php'))
+    !file_exists($_SERVER['PWD'].'/constants.php'))
 {
     exit('Один из служебных файлов не подключен');
 }
