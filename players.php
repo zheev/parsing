@@ -7,16 +7,16 @@
  */
 
 
-if( !file_exists($_SERVER['PWD'].'/db.php') ||
-    !file_exists($_SERVER['PWD'].'/lib.php') ||
-    !file_exists($_SERVER['PWD'].'/constants.php'))
+if( !file_exists(__dir__.'/db.php') ||
+    !file_exists(__dir__.'/lib.php') ||
+    !file_exists(__dir__.'/constants.php'))
 {
     exit('Один из служебных файлов не подключен');
 }
 
-require $_SERVER['PWD'].'/lib.php';
-require $_SERVER['PWD'].'/constants.php';
-require $_SERVER['PWD'].'/db.php';
+require_once __dir__.'/lib.php';
+require_once __dir__.'/constants.php';
+require_once __dir__.'/db.php';
 
 //получим html код списка игроков и тренеров
 $html = getHtmlPlayers();

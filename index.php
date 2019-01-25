@@ -7,22 +7,22 @@
  */
 
 
-if( !file_exists($_SERVER['PWD'].'/db.php') ||
-    !file_exists($_SERVER['PWD'].'/lib.php') ||
-    !file_exists($_SERVER['PWD'].'/telegram.php'))
+if( !file_exists(__dir__.'/db.php') ||
+    !file_exists(__dir__.'/lib.php') ||
+    !file_exists(__dir__.'/telegram.php'))
 {
     exit('Один из служебных файлов не подключен');
 }
 
-if(!file_exists($_SERVER['PWD'].'/constants.php'))
+if(!file_exists(__dir__.'/constants.php'))
 {
     exit('Файл с константами \'constants.php\' в корне сайта не создан');
 }
 
-require $_SERVER['PWD'].'/constants.php';
-require $_SERVER['PWD'].'/db.php';
-require $_SERVER['PWD'].'/lib.php';
-require $_SERVER['PWD'].'/telegram.php';
+require_once __dir__.'/constants.php';
+require_once __dir__.'/db.php';
+require_once __dir__.'/lib.php';
+require_once __dir__.'/telegram.php';
 
 
 $html = getHtml();

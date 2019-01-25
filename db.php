@@ -11,8 +11,8 @@
  */
 function db_connect(&$db)
 {
-    if(!file_exists($_SERVER['PWD'].'/'.DB)){
-        $db = new SQLite3($_SERVER['PWD'].'/'.DB);
+    if(!file_exists(__dir__.'/'.DB)){
+        $db = new SQLite3(__dir__.'/'.DB);
         $createLinkTable="CREATE TABLE links(
             id INTEGER PRIMARY KEY,
             url TEXT UNIQUE
@@ -27,7 +27,7 @@ function db_connect(&$db)
         $db->query($createListPlayers);
     }else{
         //если бд есть то просто подключ. к ней
-        $db = new SQLite3($_SERVER['PWD'].'/'.DB);
+        $db = new SQLite3(__dir__.'/'.DB);
     }
 }
 

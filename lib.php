@@ -48,10 +48,10 @@ function fillArray($array, &$arTrueLink)
     $count = count($array[0]);
 
     $persons = implode('|', selectAllPlaeyrs());
-
+    
     for($i = 0; $i <= $count-1; $i++)
     {
-        if(preg_match('/(Рубин|'.$persons.')/ms',$array[1][$i])
+        if(preg_match('/(Рубин'.($persons?'|'.$persons:'').')/ms',$array[1][$i])
         && !preg_match('/((Все трансферы РПЛ))/ms', $array[1][$i]))
         {
             $arTrueLink[] = $array[0][$i];
@@ -158,12 +158,12 @@ function getPhoto($url)
     //првоеряем на пустоту
     if($image){
         //если нет папки tmp, то создаём
-        if(!file_exists($_SERVER['PWD'].'/tmp/'))
+        if(!file_exists(__dir__.'/tmp/'))
         {
-            mkdir($_SERVER['PWD'].'/tmp/', 755);
+            mkdir(__dir__.'/tmp/', 755);
         }
         //запишем в переменную путь и название файла
-        $new_name = $_SERVER['PWD'].'/tmp/'.time().'.jpg';
+        $new_name = __dir__.'/tmp/'.time().'.jpg';
         //запишем файл
         file_put_contents($new_name, $image);
     }
@@ -177,7 +177,7 @@ function getPhoto($url)
  */
 function writeLog($text)
 {
-    $f = fopen($_SERVER['PWD'].'/logs/log.txt', 'a');
+    $f = fopen(__dir__.'/logs/log.txt', 'a');
     fwrite($f, $text . PHP_EOL);
     fclose($f);
 }
