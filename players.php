@@ -6,7 +6,7 @@
  * Time: 21:53
  */
 
-
+//Проверяем наличие файлов
 if( !file_exists(__dir__.'/db.php') ||
     !file_exists(__dir__.'/lib.php') ||
     !file_exists(__dir__.'/constants.php'))

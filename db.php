@@ -34,6 +34,7 @@ function db_connect(&$db)
 /**
  * @param array $players
  */
+//Добавляем игроков
 function addPlayer($players = [])
 {
     db_connect($db);

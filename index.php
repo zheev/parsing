@@ -26,7 +26,7 @@ require_once __dir__.'/telegram.php';
 
 
 $html = getHtml();
-
+//проверяем длину ответа
 if(strlen($html) <= 0)
 {
     exit('Не удалось получить html-код с сайта');

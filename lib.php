@@ -23,7 +23,7 @@ function getHtml()
 
     return $html;
 }
-
+//Получаем html-код списка игроков и тренеров
 function getHtmlPlayers()
 {
     $ch = curl_init('http://www.rubin-kazan.ru/ru/team');
