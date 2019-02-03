@@ -28,7 +28,6 @@ function handlerCurl($url)
 /**
  * @return string
  */
-
 function getHtml()
 {
 
