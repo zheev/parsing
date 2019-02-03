@@ -35,6 +35,7 @@ function getHtml()
     return handlerCurl('http://sport.business-gazeta.ru/razdel/484');
 
 }
+
 //Получаем html-код списка игроков и тренеров
 /**
  * @return string
