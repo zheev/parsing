@@ -6,36 +6,37 @@
  * Time: 21:42
  */
 
+//Функция для инициализации curl, чтобы не плодить одинаковый код
+function handlerCurl($url)
+{
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13");
+
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_HEADER, false);
+    $data = curl_exec($ch);
+    curl_close($ch);
+    return $data;
+}
+
 //Функция для получения html с нужной страницы. Работаем с помощью cUrl
 /**
  * @return string
  */
+
 function getHtml()
 {
-    $ch = curl_init('http://sport.business-gazeta.ru/razdel/484');
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13");
 
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_HEADER, false);
-    $html = curl_exec($ch);
-    curl_close($ch);
+    return handlerCurl('http://sport.business-gazeta.ru/razdel/484');
 
-    return $html;
 }
 //Получаем html-код списка игроков и тренеров
 function getHtmlPlayers()
 {
-    $ch = curl_init('http://www.rubin-kazan.ru/ru/team');
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13");
 
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_HEADER, false);
-    $html = curl_exec($ch);
-    curl_close($ch);
+    return handlerCurl('http://www.rubin-kazan.ru/ru/team');
 
-    return $html;
 }
 
 //Функция для заполнения массива необходимыми урлами.
