@@ -20,6 +20,11 @@ if(!file_exists(__dir__.'/constants.php'))
 }
 
 require_once __dir__.'/constants.php';
+
+
+if(!defined(CHAT_BOT) || !defined(CHANNEL) || !defined(DB))
+    exit('Одна или несколько констант не определна');
+
 require_once __dir__.'/db.php';
 require_once __dir__.'/lib.php';
 require_once __dir__.'/telegram.php';
@@ -68,14 +73,13 @@ $urlsFromDb = selectAllUrls();
 
 foreach ($arTrueLink as $url)
 {
-    if(count($urlsFromDb) > 0){
-        if(!in_array($url, $urlsFromDb))
-        {
+    //Проверяем есть ли записи в бд.
+    //проверяем нет ли подходящей ссылки в бд.
+    if(count($urlsFromDb) > 0 && !in_array($url, $urlsFromDb)){
             sendMessage($url);
             writeLog(date('d').'.'.date('m'). '.'.date('Y').' '.date('G').' Отправлена новость '.$url);
-        }
     }else{
-
+        //услвоие если записей в бд нет, то проверки нет. Добавляем все подходящие ссылки.
         sendMessage($url);
         writeLog(date('d').'.'.date('m'). '.'.date('Y').' '.date('G').' Отправлена новость '.$url);
 
@@ -84,6 +88,6 @@ foreach ($arTrueLink as $url)
 }
 
 unset($urlsFromDb);
-
+//добавляем подходящие ссылки, дублируещие из массива не удаляем, так как бд сама их не добавит.
 addUrl($arTrueLink);
 
