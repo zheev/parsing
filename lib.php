@@ -7,6 +7,10 @@
  */
 
 //Функция для инициализации curl, чтобы не плодить одинаковый код
+/**
+ * @param $url
+ * @return string
+ */
 function handlerCurl($url)
 {
     $ch = curl_init($url);
@@ -17,7 +21,7 @@ function handlerCurl($url)
     curl_setopt($ch, CURLOPT_HEADER, false);
     $data = curl_exec($ch);
     curl_close($ch);
-    return $data;
+    return ($data ? $data : '');
 }
 
 //Функция для получения html с нужной страницы. Работаем с помощью cUrl
@@ -32,6 +36,9 @@ function getHtml()
 
 }
 //Получаем html-код списка игроков и тренеров
+/**
+ * @return string
+ */
 function getHtmlPlayers()
 {
 
