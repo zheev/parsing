@@ -11,8 +11,19 @@
  */
 function db_connect(&$db)
 {
+    $isExistsDB = true;
+
+    /**
+     *  Проиверим есть ли база, что бы дважды не писать
+     *  создание соединения
+     */
     if(!file_exists(__dir__.'/'.DB)){
-        $db = new SQLite3(__dir__.'/'.DB);
+        $isExistsDB = false;
+    }
+
+    $db = new SQLite3(__dir__.'/'.DB);
+
+    if(!$isExistsDB){
         $createLinkTable="CREATE TABLE links(
             id INTEGER PRIMARY KEY,
             url TEXT UNIQUE
@@ -25,9 +36,6 @@ function db_connect(&$db)
         )";
 
         $db->query($createListPlayers);
-    }else{
-        //если бд есть то просто подключ. к ней
-        $db = new SQLite3(__dir__.'/'.DB);
     }
 }
 
@@ -51,7 +59,7 @@ function addPlayer($players = [])
     $db->close();
 }
 
-function selectAllPlaeyrs()
+function selectAllPlayers()
 {
     db_connect($db);
 

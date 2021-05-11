@@ -55,7 +55,7 @@ function fillArray($array, &$arTrueLink)
 {
     $count = count($array[0]);
 
-    $persons = implode('|', selectAllPlaeyrs());
+    $persons = implode('|', selectAllPlayers());
     
     for($i = 0; $i <= $count-1; $i++)
     {
@@ -131,14 +131,8 @@ function getTextNote($url)
 
     if($url)
     {
-        $ch = curl_init('http://sport.business-gazeta.ru'.$url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13");
 
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        $html = curl_exec($ch);
-        curl_close($ch);
+        $html = handlerCurl('http://sport.business-gazeta.ru');
 
         return expressionArticle($html);
 
